@@ -1,5 +1,9 @@
-# Ruta de las herramientas de GBA
-export DEVKITARM ?= /opt/devkitpro/devkitARM
+# Rutas oficiales dentro del contenedor Docker de devkitPro
+export DEVKITPRO ?= /opt/devkitpro
+export DEVKITARM ?= $(DEVKITPRO)/devkitARM
+
+# Añadir las herramientas al PATH para que make las encuentre de inmediato
+export PATH := $(DEVKITARM)/bin:$(PATH)
 
 PREFIX  := arm-none-eabi-
 CXX     := $(PREFIX)g++
