@@ -1,10 +1,12 @@
 // Definición de los registros básicos de video de la GBA
-#define REG_DISPCNT *(volatile unsigned short*)0x04000000
+// Añadimos paréntesis exteriores para evitar errores matemáticos
+#define REG_DISPCNT (*(volatile unsigned short*)0x04000000)
 #define MODE_3 3
 #define BG2_ENABLE (1 << 10)
 
 // Puntero a la memoria de video de la pantalla (VRAM)
-#define VRAM (volatile unsigned short*)0x06000000
+// ¡Aquí estaban los paréntesis que faltaban!
+#define VRAM ((volatile unsigned short*)0x06000000)
 
 // Función para convertir colores RGB a formato de 15 bits de GBA
 constexpr unsigned short RGB15(unsigned int r, unsigned int g, unsigned int b) {
