@@ -11,8 +11,8 @@ jobs:
       - name: Descargar código
         uses: actions/checkout@v4
 
-      - name: Instalar Butano y actualizar
-        run: dkp-pacman -Syyu --noconfirm tonclib butano
+      - name: Instalar librerias de GBA
+        run: dkp-pacman -Syyu --noconfirm gba-dev
 
       - name: Compilar juego
         run: make
