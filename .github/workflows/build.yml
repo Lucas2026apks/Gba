@@ -11,8 +11,13 @@ jobs:
       - name: Descargar código
         uses: actions/checkout@v4
 
+      - name: Actualizar llaves y repositorios de devkitPro
+        run: |
+          dgp-keys || true
+          dkp-pacman -Syyu --noconfirm || true
+
       - name: Instalar librerias de GBA
-        run: dkp-pacman -Syyu --noconfirm gba-dev
+        run: dkp-pacman -S --noconfirm gba-dev
 
       - name: Compilar juego
         run: make
