@@ -10,15 +10,25 @@ jobs:
       - name: Descargar código
         uses: actions/checkout@v4
 
-      - name: Configurar devkitpro 
-        uses: devkitPro/actions/install@main
+      - name: Instalar dependencias del sistema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl gdebi-core libarchive-tools
+
+      - name: Instalar devkitPro pacman
+        run: |
+          sudo curl -L https://github.com/devkitPro/pacman-install/releases/download/v1.0.3/pacman-install.sh -o pacman-install.sh
+          sudo chmod +x pacman-install.sh
+          sudo ./pacman-install.sh
 
       - name: Instalar Butano y Tonc
         run: |
-          dkp-pacman -Syu --noconfirm tonclib butano
+          sudo dkp-pacman -Syu --noconfirm tonclib butano
 
       - name: Compilar juego
         run: |
+          export DEVKITPRO=/opt/devkitpro
+          export DEVKITARM=${DEVKITPRO}/devkitARM
           make
 
       - name: Guardar archivo ROM (.gba)
