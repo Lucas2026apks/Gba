@@ -1,0 +1,28 @@
+name: Compilar GBA
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/devkitpro/development:latest
+
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Configurar entorno GBA
+        run: |
+          dkp-pacman -Syu --noconfirm tonclib butano
+
+      - name: Compilar juego
+        run: |
+          make
+
+      - name: Guardar archivo ROM (.gba)
+        uses: actions/upload-artifact@v4
+        with:
+          name: juego-gba
+          path: |
+            *.gba
+            out/*.gba
