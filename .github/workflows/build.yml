@@ -10,7 +10,7 @@ jobs:
       - name: Descargar código
         uses: actions/checkout@v4
 
-      - name: Configurar devkitPro
+      - name: Configurar devkitpro 
         uses: devkitPro/actions/install@main
 
       - name: Instalar Butano y Tonc
