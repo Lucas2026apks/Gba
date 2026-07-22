@@ -5,18 +5,27 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ghcr.io/devkitpro/development:latest
 
     steps:
       - name: Descargar código
         uses: actions/checkout@v4
 
-      - name: Configurar entorno GBA
+      - name: Instalar dependencias de devkitPro
         run: |
-          dkp-pacman -Syu --noconfirm tonclib butano
+          sudo apt-get update
+          sudo apt-get install -y wget gdebi-core lsb-release software-properties-common
+          wget https://apt.devkitpro.org/install-devkitpro-pacman -O install-devkitpro-pacman
+          sudo chmod +x install-devkitpro-pacman
+          sudo ./install-devkitpro-pacman --noconfirm
+
+      - name: Instalar paquetes de GBA (Butano y Tonc)
+        run: |
+          sudo dkp-pacman -Syu --noconfirm tonclib butano
 
       - name: Compilar juego
         run: |
+          export DEVKITPRO=/opt/devkitpro
+          export DEVKITARM=${DEVKITPRO}/devkitARM
           make
 
       - name: Guardar archivo ROM (.gba)
